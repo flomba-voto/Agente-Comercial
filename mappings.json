@@ -1,0 +1,1149 @@
+{
+  "version": "2.0",
+  "metadata_version": "5.0",
+  "classification": "uso interno confidencial",
+  "observed_at": "2026-10-14",
+  "dataset": {
+    "file": "current.parquet",
+    "observed_snapshot": {
+      "rows": 336601,
+      "bytes": 80079227,
+      "sha256": "6bb0a71e63315521d07b843e4ed3988e130a8537cd676d366103072fdb9d09a2",
+      "remote_modified_at": "2026-10-09T16:48:40Z",
+      "remote_version": 4,
+      "normalization_already_verified": false
+    },
+    "expected_normalization": "Inspeccionar esquema y valores de cada carga; aceptar IDs íntegros texto/entero/Decimal sin modificar originales. No existe un único dtype de pagador que coincida con todos los DIM. Ninguna huella futura predicha.",
+    "observed_schema": {
+      "id": "INT64",
+      "business_key": "STRING",
+      "content_hash": "STRING",
+      "record_status": "STRING",
+      "version_number": "INT64",
+      "first_seen_run_id": "INT64",
+      "last_seen_run_id": "INT64",
+      "valid_from_run_id": "INT64",
+      "valid_to_run_id": "INT64",
+      "first_seen_at": "STRING",
+      "last_seen_at": "STRING",
+      "stale_at": "STRING",
+      "source_deleted_flag": "INT64",
+      "sales_document": "STRING",
+      "sales_document_type": "STRING",
+      "order_reason": "STRING",
+      "sales_organization": "STRING",
+      "distribution_channel": "STRING",
+      "sales_group": "STRING",
+      "sales_group_descript": "STRING",
+      "sold_to_party": "STRING",
+      "sold_to_party_descript": "STRING",
+      "postal_code": "STRING",
+      "city": "STRING",
+      "country_key": "STRING",
+      "customers_account_n": "STRING",
+      "customer": "STRING",
+      "material_number": "STRING",
+      "material_description": "STRING",
+      "material_group": "STRING",
+      "material_group_descript": "STRING",
+      "sales_document_item_1": "STRING",
+      "reason_for_rejection": "STRING",
+      "sales_unit": "STRING",
+      "plant": "STRING",
+      "route": "STRING",
+      "route_description": "STRING",
+      "delivery_priority": "STRING",
+      "net_price": "DOUBLE",
+      "net_value_of_the_order": "DOUBLE",
+      "tax_amount": "DOUBLE",
+      "currency": "STRING",
+      "price_group": "STRING",
+      "price_group_descript": "STRING",
+      "customer_group": "STRING",
+      "customer_group_descript": "STRING",
+      "terms_of_payment_key": "STRING",
+      "terms_of_payment_descript": "STRING",
+      "region": "STRING",
+      "region_description": "STRING",
+      "net_weight_1": "DOUBLE",
+      "date_on_which_record": "TIMESTAMP_US_NO_TZ",
+      "distance": "DOUBLE",
+      "um_for_distance": "STRING",
+      "artifact_key": "STRING",
+      "source_file": "STRING",
+      "dom_index": "INT64",
+      "_dg_equivalence_key": "STRING",
+      "_dg_occurrence_count": "INT64",
+      "_dg_occurrence_index": "INT64"
+    },
+    "fields": [
+      {
+        "name": "id",
+        "agent_usable": false,
+        "definition": "Identificador técnico de fila.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "business_key",
+        "agent_usable": false,
+        "definition": "Hash técnico de la clave de negocio.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "content_hash",
+        "agent_usable": false,
+        "definition": "Hash técnico del contenido.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "record_status",
+        "agent_usable": false,
+        "definition": "Estado técnico del registro.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "version_number",
+        "agent_usable": false,
+        "definition": "Versión técnica.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "first_seen_run_id",
+        "agent_usable": false,
+        "definition": "Primera carga en que se observó.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "last_seen_run_id",
+        "agent_usable": false,
+        "definition": "Última carga en que se observó.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "valid_from_run_id",
+        "agent_usable": false,
+        "definition": "Carga inicial de vigencia.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "valid_to_run_id",
+        "agent_usable": false,
+        "definition": "Carga final de vigencia.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "first_seen_at",
+        "agent_usable": false,
+        "definition": "Fecha-hora técnica de primera observación.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "last_seen_at",
+        "agent_usable": false,
+        "definition": "Fecha-hora técnica de última observación.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "stale_at",
+        "agent_usable": false,
+        "definition": "Fecha-hora técnica de obsolescencia.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "source_deleted_flag",
+        "agent_usable": false,
+        "definition": "Flag de borrado en origen.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "sales_document",
+        "agent_usable": true,
+        "definition": "Identificador del documento de ventas, representado como texto canónico; conservar ceros iniciales.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sales_document_type",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "order_reason",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sales_organization",
+        "agent_usable": true,
+        "definition": "Identifica la región comercial de la transacción mediante el mapa documentado.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "distribution_channel",
+        "agent_usable": true,
+        "definition": "Identifica el formato del producto: E3=Granel; E4=Ensacado.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sales_group",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sales_group_descript",
+        "agent_usable": true,
+        "definition": "Vendedor bajo el que está registrado el cliente en SAP.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sold_to_party",
+        "agent_usable": true,
+        "definition": "Número de obra/solicitante según la definición heredada; representado como texto canónico. No reinterpretar como cliente/pagador por su nombre inglés.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sold_to_party_descript",
+        "agent_usable": true,
+        "definition": "Nombre asociado a la obra/solicitante identificada por `sold_to_party`; no sustituye al nombre restringido del cliente/pagador.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "postal_code",
+        "agent_usable": true,
+        "definition": "Código postal de la obra.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "city",
+        "agent_usable": true,
+        "definition": "Población de la obra.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "country_key",
+        "agent_usable": true,
+        "definition": "País de la obra.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "customers_account_n",
+        "agent_usable": true,
+        "definition": "Número de cliente/pagador, identificador canónico textual; conservar ceros iniciales.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "customer",
+        "agent_usable": true,
+        "definition": "Nombre de cliente asociado a `customers_account_n`. La definición existe, pero el flag no autoriza usar el nombre ni resolver identidades con él.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "material_number",
+        "agent_usable": true,
+        "definition": "Código de material. Enlace auxiliar a DIM_Material.parquet sin alterar el original.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "material_description",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "material_group",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "material_group_descript",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sales_document_item_1",
+        "agent_usable": true,
+        "definition": "Correspondencia de datos con el antiguo campo de tipo de posición; no es una equivalencia con un número de posición. La definición funcional continúa pendiente y el campo no está autorizado.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "reason_for_rejection",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "sales_unit",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "plant",
+        "agent_usable": true,
+        "definition": "Centro de expedición del cemento.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "route",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "route_description",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "delivery_priority",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "net_price",
+        "agent_usable": true,
+        "definition": "Precio neto del albarán, por tonelada según el contrato funcional heredado; aplicar controles de unidad antes del valor de entrega derivado.",
+        "observed_type": "DOUBLE"
+      },
+      {
+        "name": "net_value_of_the_order",
+        "agent_usable": true,
+        "definition": "Valor neto registrado en la fuente; no confundir con `valor_neto_entrega` derivado.",
+        "observed_type": "DOUBLE"
+      },
+      {
+        "name": "tax_amount",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "DOUBLE"
+      },
+      {
+        "name": "currency",
+        "agent_usable": true,
+        "definition": "Moneda del documento; EUR en la instantánea revisada, sin garantía de moneda única en futuras cargas.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "price_group",
+        "agent_usable": true,
+        "definition": "Identifica quién gestiona la entrega: CE=Votorantim; CP=cliente recoge o gestiona el pedido.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "price_group_descript",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "customer_group",
+        "agent_usable": true,
+        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "customer_group_descript",
+        "agent_usable": true,
+        "definition": "Identifica el grupo al que pertenece el cliente.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "terms_of_payment_key",
+        "agent_usable": true,
+        "definition": "Código relativo al tipo de pago.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "terms_of_payment_descript",
+        "agent_usable": true,
+        "definition": "Descripción de las condiciones de pago.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "region",
+        "agent_usable": true,
+        "definition": "Provincia del cliente/pagador según la codificación INE o numeración alfabética de provincias de España heredada; no es la región comercial derivada.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "region_description",
+        "agent_usable": true,
+        "definition": "Nombre de la provincia asociado a `region`.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "net_weight_1",
+        "agent_usable": true,
+        "definition": "Peso neto entregado al cliente, medida de volumen comercial según la regla heredada. El contrato lo expresa en toneladas, pero el esquema no declara unidad de peso; aplicar los controles de unidad antes de cálculos o etiquetas.",
+        "observed_type": "DOUBLE"
+      },
+      {
+        "name": "date_on_which_record",
+        "agent_usable": true,
+        "definition": "Fecha de la operación comercial de la observación. Operaciones: filtrar, agrupar, ordenar, mínimo, máximo, año, trimestre, mes, semana, día, MTD, YTD, comparación interanual y variación entre períodos.",
+        "observed_type": "TIMESTAMP[µs] sin zona horaria (INT64; isAdjustedToUTC=false)"
+      },
+      {
+        "name": "distance",
+        "agent_usable": true,
+        "definition": "Distancia entre expedición y entrega, en kilómetros cuando `um_for_distance` declara KM; no interpretar unidad vacía y cero como un trayecto real nulo.",
+        "observed_type": "DOUBLE"
+      },
+      {
+        "name": "um_for_distance",
+        "agent_usable": true,
+        "definition": "Unidad declarada de distancia: KM o cadena vacía en la instantánea revisada; el vacío no acredita una unidad.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "artifact_key",
+        "agent_usable": false,
+        "definition": "Campo técnico nuevo. Su semántica exacta, alcance y estabilidad están pendientes de confirmación; no se presume que reemplace un identificador antiguo.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "source_file",
+        "agent_usable": false,
+        "definition": "Campo técnico nuevo de nombre indicativo de archivo fuente; su contrato no está confirmado y no equivale automáticamente a una hoja de origen.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "dom_index",
+        "agent_usable": false,
+        "definition": "Campo técnico nuevo, entero; el nombre no permite confirmar su significado ni equipararlo a un número de fila previo.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "_dg_equivalence_key",
+        "agent_usable": false,
+        "definition": "Campo técnico nuevo de equivalencia; construcción, unicidad y uso como clave no confirmados.",
+        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+      },
+      {
+        "name": "_dg_occurrence_count",
+        "agent_usable": false,
+        "definition": "Campo técnico nuevo de ocurrencias; no asumir que sea un factor de expansión, una cantidad comercial ni un multiplicador.",
+        "observed_type": "INT64"
+      },
+      {
+        "name": "_dg_occurrence_index",
+        "agent_usable": false,
+        "definition": "Campo técnico nuevo de ocurrencias; orden y significado pendientes de confirmación.",
+        "observed_type": "INT64"
+      }
+    ],
+    "id_widths": {
+      "sales_document": 10,
+      "sold_to_party": 10,
+      "customers_account_n": 10,
+      "material_number": 18
+    }
+  },
+  "runtime_privacy_blocked_fields": [],
+  "field_certifications": {
+    "net_weight_1": ["peso_toneladas"],
+    "net_price": ["precio_por_tonelada"]
+  },
+  "data_labels_are_instructions": false,
+  "mappings": {
+    "material": {
+      "file": "DIM_Material.parquet",
+      "source_excel_ingestion_only": "DIM_D_Material.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "material_number": "INT64",
+        "denomin_material": "STRING",
+        "fabrica": "STRING",
+        "embalaje": "STRING",
+        "calidad": "STRING",
+        "tipo_de_cemento": "STRING",
+        "prod_kkc": "STRING",
+        "kkc": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "material_number": "INT64",
+        "denomin_material": "STRING",
+        "fabrica": "STRING",
+        "embalaje": "STRING",
+        "calidad": "STRING",
+        "tipo_de_cemento": "STRING",
+        "prod_kkc": "STRING",
+        "kkc": "STRING"
+      },
+      "keys": [
+        {
+          "raw": "material_number",
+          "dim": "material_number",
+          "policy": "integral_id",
+          "width": 18
+        }
+      ],
+      "attributes": [
+        "fabrica",
+        "embalaje",
+        "calidad",
+        "tipo_de_cemento",
+        "prod_kkc",
+        "kkc"
+      ],
+      "forbidden_attributes": [],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 104,
+        "sha256": "11da562a71a0b47b3e2dc15d9393daa5efa308338a285c30b6848f09721ef8c2"
+      },
+      "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
+      "physical_edits_allowed": false
+    },
+    "grupo_clientes": {
+      "file": "DIM_GrupoClientes.parquet",
+      "source_excel_ingestion_only": "DIM_D_GrupoClientes.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "customers_account_n": "INT64",
+        "denomin_central": "STRING",
+        "nombre_del_cliente": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "customers_account_n": "INT64",
+        "denomin_central": "STRING",
+        "nombre_del_cliente": "STRING"
+      },
+      "keys": [
+        {
+          "raw": "customers_account_n",
+          "dim": "customers_account_n",
+          "policy": "integral_id",
+          "width": 10
+        }
+      ],
+      "attributes": [
+        "denomin_central"
+      ],
+      "forbidden_attributes": [
+        "nombre_del_cliente"
+      ],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 222,
+        "sha256": "80cdc1be04029c5b87d1a2aa3547e6daf260f3a0792aac0023817aa89d6e0a64"
+      },
+      "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
+      "physical_edits_allowed": false
+    },
+    "distribuidores": {
+      "file": "DIM_Distribuidores.parquet",
+      "source_excel_ingestion_only": "DIM_D_Distribuidores.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "customers_account_n": "STRING",
+        "cliente_ajustado": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "customers_account_n": "STRING",
+        "cliente_ajustado": "STRING"
+      },
+      "keys": [
+        {
+          "raw": "customers_account_n",
+          "dim": "customers_account_n",
+          "policy": "integral_id",
+          "width": 10
+        }
+      ],
+      "attributes": [],
+      "forbidden_attributes": [
+        "cliente_ajustado"
+      ],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 6,
+        "sha256": "3c130d3a19551933a59617bec5765cb122875fa6b3ef70cb1808c4ea6344a74b"
+      },
+      "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
+      "physical_edits_allowed": false,
+      "computed_attributes": [
+        "figura_en_mapping"
+      ]
+    },
+    "geografia": {
+      "file": "DIM_Geografia.parquet",
+      "source_excel_ingestion_only": "DIM_F_Geografia.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "region_description": "STRING",
+        "ccaa": "STRING",
+        "provincia_ajustada": "STRING",
+        "mercado_oficemen": "STRING",
+        "pain": "STRING",
+        "zona_comercial": "STRING",
+        "mercado": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "region_description": "STRING",
+        "ccaa": "STRING",
+        "provincia_ajustada": "STRING",
+        "mercado_oficemen": "STRING",
+        "pain": "STRING",
+        "zona_comercial": "STRING",
+        "mercado": "STRING"
+      },
+      "keys": [
+        {
+          "raw": "region_description",
+          "dim": "region_description",
+          "policy": "exact_text"
+        }
+      ],
+      "attributes": [
+        "ccaa",
+        "provincia_ajustada",
+        "mercado_oficemen",
+        "pain",
+        "zona_comercial",
+        "mercado"
+      ],
+      "forbidden_attributes": [],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 108,
+        "sha256": "6ac414f4b6a453a04be04d5b10e707c8aba20ad00452f151276123cd2dd09128"
+      },
+      "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
+      "physical_edits_allowed": false,
+      "entity_scope": "Clasificación de provincia del pagador, no provincia de obra; pain es atributo del mapping y no country_key."
+    },
+    "organizacion": {
+      "file": "DIM_OrgVnt.parquet",
+      "source_excel_ingestion_only": "DIM_F_OrgVnt.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "sales_office": "STRING",
+        "region_comercial_documentada": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "sales_office": "STRING",
+        "region_comercial_documentada": "STRING"
+      },
+      "keys": [
+        {
+          "raw": "sales_organization",
+          "dim": "sales_office",
+          "policy": "exact_text"
+        }
+      ],
+      "attributes": [
+        "region_comercial_documentada"
+      ],
+      "forbidden_attributes": [],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 10,
+        "sha256": "925b40d733be170eddd87db25fd1e490794a6ca70bd341b23cdc799e2ffada34"
+      },
+      "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
+      "physical_edits_allowed": false,
+      "entity_scope": "sales_office es nombre físico de la clave DIM explícitamente vinculado a sales_organization; no existe sales_office en current."
+    },
+    "territorio": {
+      "file": "DIM_SalesDistrict.parquet",
+      "source_excel_ingestion_only": "DIM_F_SalesDistrict.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "postal_code": "STRING",
+        "sales_district": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "postal_code": "STRING",
+        "sales_district": "STRING"
+      },
+      "keys": [
+        {
+          "raw": "postal_code",
+          "dim": "postal_code",
+          "policy": "exact_text"
+        }
+      ],
+      "attributes": [
+        "sales_district"
+      ],
+      "forbidden_attributes": [],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 2451,
+        "sha256": "909273de60b1eccdc8a979df956fde8210cbc291b261aa2d5804b7bf5e403111"
+      },
+      "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
+      "physical_edits_allowed": false,
+      "entity_scope": "Territorio comercial por CP de obra; sin país en la dimensión. No inferir jerarquía con provincia de pagador."
+    },
+    "cartera": {
+      "file": "DIM_CarteraClientes.parquet",
+      "source_excel_ingestion_only": "DIM_D_CarteraClientes.xlsx",
+      "observed_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "busqueda_obra": "STRING",
+        "busqueda_pagador": "STRING",
+        "orgvt": "STRING",
+        "cdis": "STRING",
+        "pagador": "INT64",
+        "nombre_del_cliente": "STRING",
+        "solic": "INT64",
+        "nombre_de_la_obra": "STRING",
+        "provincia": "STRING",
+        "gven": "STRING",
+        "gclt": "STRING",
+        "gclt2": "STRING",
+        "nif": "STRING"
+      },
+      "expected_schema": {
+        "id": "INT64",
+        "business_key": "STRING",
+        "content_hash": "STRING",
+        "record_status": "STRING",
+        "version_number": "INT64",
+        "first_seen_run_id": "INT64",
+        "last_seen_run_id": "INT64",
+        "valid_from_run_id": "INT64",
+        "valid_to_run_id": "INT64",
+        "first_seen_at": "STRING",
+        "last_seen_at": "STRING",
+        "stale_at": "STRING",
+        "source_deleted_flag": "INT64",
+        "busqueda_obra": "STRING",
+        "busqueda_pagador": "STRING",
+        "orgvt": "STRING",
+        "cdis": "STRING",
+        "pagador": "INT64",
+        "nombre_del_cliente": "STRING",
+        "solic": "INT64",
+        "nombre_de_la_obra": "STRING",
+        "provincia": "STRING",
+        "gven": "STRING",
+        "gclt": "STRING",
+        "gclt2": "STRING",
+        "nif": "STRING"
+      },
+      "observed_snapshot": {
+        "rows": 3408,
+        "sha256": "dfb0d0c05282ff922dba3462ef765b0c20ef57b81a2f499058ce0bc786f583f8"
+      },
+      "keys": [
+        {
+          "raw": "sales_organization",
+          "dim": "orgvt",
+          "policy": "exact_text"
+        },
+        {
+          "raw": "distribution_channel",
+          "dim": "cdis",
+          "policy": "exact_text"
+        },
+        {
+          "raw": "sold_to_party",
+          "dim": "solic",
+          "policy": "integral_id",
+          "width": 10
+        }
+      ],
+      "levels": [
+        {
+          "name": "obra",
+          "keys": [
+            {
+              "raw": "sales_organization",
+              "dim": "orgvt",
+              "policy": "exact_text"
+            },
+            {
+              "raw": "distribution_channel",
+              "dim": "cdis",
+              "policy": "exact_text"
+            },
+            {
+              "raw": "sold_to_party",
+              "dim": "solic",
+              "policy": "integral_id",
+              "width": 10
+            }
+          ]
+        },
+        {
+          "name": "pagador",
+          "keys": [
+            {
+              "raw": "sales_organization",
+              "dim": "orgvt",
+              "policy": "exact_text"
+            },
+            {
+              "raw": "distribution_channel",
+              "dim": "cdis",
+              "policy": "exact_text"
+            },
+            {
+              "raw": "customers_account_n",
+              "dim": "pagador",
+              "policy": "integral_id",
+              "width": 10
+            }
+          ]
+        }
+      ],
+      "payer_check": {
+        "raw": "customers_account_n",
+        "dim": "pagador",
+        "width": 10
+      },
+      "assignment_column": "gven",
+      "attributes": [
+        "gven"
+      ],
+      "internal_attributes": [],
+      "computed_attributes": [
+        "asignada",
+        "fuente",
+        "estado",
+        "nivel_consultado"
+      ],
+      "forbidden_attributes": [
+        "nombre_del_cliente",
+        "nombre_de_la_obra",
+        "nif",
+        "provincia",
+        "gclt",
+        "gclt2",
+        "busqueda_obra",
+        "busqueda_pagador"
+      ],
+      "fallback_from_statuses": [
+        "sin_coincidencia",
+        "clave_ausente"
+      ],
+      "fallback_sales_group": true,
+      "fallback_sales_group_descript": true,
+      "physical_edits_allowed": false,
+      "cardinality_policy": "unique_exact_gven_and_payer_tuple_for_obra_unique_exact_gven_for_pagador",
+      "public_projection": "gven autorizado exclusivamente para identificar responsable/asignación, con estado/fuente/asignada/nivel_consultado. No evaluar desempeño, competencia ni rankings de empleados; no inferir crosswalk laboral con descriptivos raw.",
+      "evidence_note": "Nuevo Parquet de 26 columnas inspeccionado: 3408 filas; igual a Excel en 13 campos. 46 claves de pagador con varios gven; tipos no resuelven conflictos."
+    }
+  },
+  "statuses": [
+    "coincidencia_univoca",
+    "sin_coincidencia",
+    "ambiguo",
+    "clave_ausente",
+    "clave_invalida",
+    "asignacion_ausente",
+    "incoherencia_obra"
+  ],
+  "join_policy": {
+    "preserve_rows": true,
+    "preserve_order_and_duplicate_index": true,
+    "geo_and_postal": "exact_text_only_no_trim_case_accent_padding_alias",
+    "identifier": "ASCII dígitos o decimal textual con fracción exclusivamente cero; entero/Decimal íntegro no negativo; límite ancho. Floats y bool rechazados. Alfanumérico se conserva exacto sin transformar.",
+    "collision_check": "Contar representaciones distintas por clave auxiliar y comprobar conjunto de tuplas de atributos requeridos; compatibles idénticas no expanden; conflictos no se asignan.",
+    "deduplicate_raw": false,
+    "first_row_wins": false,
+    "aliases_allowed": true
+  },
+  "metrics": {
+    "conteo_observaciones": {
+      "raw_columns": [
+        "sales_document"
+      ],
+      "certifications": [],
+      "label": "Observaciones (no ventas, pedidos ni entregas únicas)"
+    },
+    "peso_toneladas": {
+      "raw_columns": [
+        "sales_document",
+        "net_weight_1"
+      ],
+      "certifications": [
+        "grano_sumable",
+        "peso_toneladas"
+      ],
+      "label": "Peso en toneladas, solo certificado"
+    },
+    "suma_valor_registrado": {
+      "raw_columns": [
+        "sales_document",
+        "net_value_of_the_order",
+        "currency"
+      ],
+      "certifications": [
+        "grano_sumable",
+        "valor_registrado_sumable"
+      ],
+      "label": "Suma de valor neto registrado, no sustituye valor de entrega"
+    },
+    "valor_neto_entrega": {
+      "raw_columns": [
+        "sales_document",
+        "net_price",
+        "net_weight_1",
+        "currency"
+      ],
+      "certifications": [
+        "grano_sumable",
+        "peso_toneladas",
+        "precio_por_tonelada"
+      ],
+      "label": "Precio por peso certificado, no valor neto registrado"
+    }
+  },
+  "semantic_certifications": {
+    "grano_sumable": null,
+    "peso_toneladas": null,
+    "precio_por_tonelada": null,
+    "valor_registrado_sumable": null,
+    "evento_fecha_y_autorizacion": null,
+    "unidad_formula_kkc": null
+  },
+  "temporal_queries_enabled": true,
+  "comparisons_enabled": true,
+  "legacy_factory_enabled_by_default": true,
+  "legacy_rules": {
+    "region": {
+      "EO11": "Norte",
+      "EO21": "Norte",
+      "EO55": "Sur",
+      "EO56": "Madeira",
+      "EO57": "Canarias",
+      "EO79": "Canarias",
+      "EO65": "Centro",
+      "EO66": "Centro",
+      "EO53": "Sur",
+      "EO54": "Export"
+    },
+    "special_material": "000000000000200212",
+    "plants": {
+      "CSCB": "Córdoba",
+      "CCAL": "Alconera",
+      "CCAC": "Alconera",
+      "CSBB": "Bobadilla",
+      "CSNB": "Niebla",
+      "CSHU": "Niebla-Madeira",
+      "CSMA": "Málaga",
+      "CSGR": "Málaga",
+      "CSPM": "Málaga",
+      "CMAL": "Málaga",
+      "CMGR": "Málaga",
+      "CMPM": "Málaga"
+    }
+  },
+  "derived_dimensions": {
+    "mercado_organizacion": {
+      "source": "sales_organization",
+      "values": {
+        "EO11": "Doméstico",
+        "EO21": "Export",
+        "EO55": "Doméstico",
+        "EO56": "Export",
+        "EO57": "Doméstico",
+        "EO79": "Doméstico",
+        "EO65": "Doméstico",
+        "EO66": "Export",
+        "EO53": "Doméstico",
+        "EO54": "Export"
+      }
+    },
+    "formato_canal": {
+      "source": "distribution_channel",
+      "values": {
+        "E3": "Granel",
+        "E4": "Ensacado"
+      }
+    },
+    "gestion_entrega": {
+      "source": "price_group",
+      "values": {
+        "CE": "Entrega gestionada por Votorantim",
+        "CP": "Cliente recoge o gestiona"
+      }
+    }
+  },
+  "not_implemented": [
+    "Motor universal de lenguaje natural",
+    "Consultas temporales/comparaciones comerciales",
+    "Rankings de empleados o evaluación de competencia",
+    "Resolución por nombre/alias/fuzzy",
+    "Cálculos KKC/sostenibilidad",
+    "Despliegue o autenticación M365",
+    "Caché persistente"
+  ],
+  "expected_identifier_families": [
+    "STRING",
+    "INT64",
+    "DECIMAL_INTEGRAL_VALUE_VALIDATED"
+  ]
+}
