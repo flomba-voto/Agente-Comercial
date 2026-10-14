@@ -1,175 +1,210 @@
 ---
 title: Metadatos operativos del agente comercial
-version: "5.0"
+version: "6.0"
 updated_at: "2026-10-14"
 dataset: current.parquet
 column_count: 60
-agent_usable_true: 42
-agent_usable_false: 18
+agent_usable_true: 41
+agent_usable_false: 19
 classification: uso interno confidencial
 ---
 
-# Alcance operativo
+# Metadatos operativos del agente comercial
 
-`current.parquet` es la fuente de observaciones; `mappings.json` define siete dimensiones oficiales,
-claves, atributos permitidos, estados y validaciones ejecutables. Este catálogo sustituye v4 sin
-conservar apéndices históricos, campos eliminados ni alias operativos. No eleva ningún flag.
+## Estado y alcance
 
-## Libertad de cálculo
+El encabezado recuperado declaraba 42/18, pero las filas del catálogo contienen 41/19.
+Esta edición corrige los contadores sin cambiar los flags de las columnas.
 
-Los campos con agent_usable=true pueden utilizarse libremente para seleccionar, filtrar, ordenar, agrupar, contar, sumar, calcular medias, mínimos, máximos, percentiles, diferencias, variaciones, porcentajes, ratios y comparaciones, siempre que la operación sea matemáticamente compatible con el tipo del campo.
 
-El agente puede combinar varios campos utilizables en una misma operación, crear cálculos temporales durante la consulta y encadenar agregaciones. No necesita una autorización específica para cada fórmula.
+Propuesta final de edición para sustituir el archivo existente. Corresponde a mappings.json 3.0.
+No acredita despliegue, permisos, motor de ejecución ni inspección de los bytes actuales.
+El catálogo conserva 60 nombres físicos y 41 campos comerciales habilitados. Los 19 campos
+restantes son técnicos. No se crean fuentes ni se modifican Parquet.
 
-Las columnas calculadas creadas durante la consulta son temporales y no modifican los archivos originales.
+## Política de cálculo y calidad
 
-Cuando una unidad o significado estén documentados en este archivo, el agente los utilizará directamente. No exigirá certificados, aprobaciones o evidencias adicionales distintas de esta definición vigente.
+### calculation
 
-## Reglas de cruce: no canonización física
+Se proponen filtros combinados, agrupaciones, ordenación, pivotes, estadísticas, diferencias, ratios y columnas temporales sobre campos habilitados. No se exige una certificación externa para describir valores registrados. Las etiquetas de negocio y conversiones requieren definición conocida.
 
-- Mantener identificadores originales. Clave auxiliar compatible de obra/pagador: ancho 10;
-  material: 18. Aceptar enteros exactos no negativos y texto ASCII numérico íntegro (también .0),
-  sin truncar; rechazar bool, float, fracción no cero y longitud excedida. Decimal íntegro es admisible.
-  Texto puramente numérico Unicode se rechaza; alfanumérico legítimo permanece exacto.
-  Nulo/blanco nunca se rellena con cero. Reportar claves inválidas.
-- No modificar DIM, no limpiar sus filas ni materializar un catálogo de aliases. Resolver en consulta
-  el conjunto único de VALORES requeridos para la clave auxiliar: repetición de igual asignación
-  puede resolverse; valores distintos producen `ambiguo`. Contar colisiones de representación
-  solo en claves efectivamente consultadas; conflictos ajenos no invalidan toda la dimensión.
-- Conservar todas las observaciones y su orden; no hacer merge expansor, escoger primera fila ni
-  `drop_duplicates` global. Conservar sin coincidencia, ambiguo, inválido y asignación ausente.
-- Geografía y CP: igualdad de texto exacta, sin trim, casefold, tildes, padding ni alias. Un valor
-  con espacios no equivale al mismo sin espacios. Cobertura parcial no implica inexistencia comercial.
-- No deduplicar raw por documento, hashes o contadores técnicos. El grano comercial sigue pendiente.
-  Excluir de consulta comercial observaciones con documento ausente/invalidado, informando cuántas.
+### access
 
-## Dimensiones oficiales y alcance
+agent_usable describe uso analítico, no concede permisos. Aplicar acceso efectivo del usuario. No exponer secretos ni evaluar rendimiento de personas.
 
-| DIM operativo | Clave raw → DIM | Atributos y uso permitido |
-|---|---|---|
-| DIM_Material.parquet | material_number → material_number (auxiliar 18) | fabrica (producción), embalaje, calidad, tipo_de_cemento, prod_kkc, kkc como etiqueta; cálculo KKC bloqueado |
-| DIM_GrupoClientes.parquet | customers_account_n → customers_account_n (auxiliar 10) | denomin_central; consolidar todos los pagadores asignados unívocamente a la central; no nombre_del_cliente |
-| DIM_Distribuidores.parquet | customers_account_n → customers_account_n (auxiliar 10) | pertenencia a lista; presencia = distribuidor documentado; ausencia = no figura, no prueba de no distribuidor; no cliente_ajustado |
-| DIM_Geografia.parquet | region_description → region_description (exacta) | provincia_ajustada, ccaa, mercado_oficemen, pain, zona_comercial, mercado |
-| DIM_OrgVnt.parquet | sales_organization → sales_office (exacta, vínculo explícito) | region_comercial_documentada oficial; raw no tiene sales_office |
-| DIM_SalesDistrict.parquet | postal_code → postal_code (exacta) | sales_district; territorio/distrito/cluster comercial, no límites administrativos |
-| DIM_CarteraClientes.parquet | organización+canal+obra; después organización+canal+pagador | gven para identificar responsable/asignación autorizada; no desempeño, competencia ni rankings |
+### categorical
 
-Cartera: reconstruir claves por componentes físicos `orgvt`, `cdis`, `solic`/`pagador`; atributo autorizado `gven`.
-No usar `busqueda_obra`/`busqueda_pagador` concatenadas.
-En obra, comparar pagador mediante clave auxiliar compatible antes de resolver conjuntos de
-asignaciones; representaciones íntegras equivalentes no son conflictos. No alterar valores originales.
-Obra tiene prioridad. Si existe una asignación de obra contradictoria, ausente o con pagador distinto,
-conservar estado y no buscar pagador. Pagador solo si obra no coincide o está ausente, y solo con
-una asignación observada única. No existe tercer nivel por sales_group. `fuente` conserva el origen de la asignación válida;
-`nivel_consultado` registra obra/pagador incluso en conflicto, y `estado` conserva el resultado. La etiqueta no certifica una
-identidad laboral ni un crosswalk con descriptivos raw.
+Campos categóricos con definición pendiente admiten análisis literal. Identificadores no se suman ni promedian.
 
-Geografía clasifica provincia del pagador (`region_description`), no provincia de obra.
-CP, `city`, `country_key` pertenecen a obra. `pain` es el país etiquetado en DIM_Geografia:
-no sustituir `country_key` ni unir dimensiones por campos técnicos. CCAA, mercado Oficemen,
-zona y mercado son clasificaciones distintas. CP→territorio no establece CP→provincia ni país:
-DIM_SalesDistrict no tiene país; no inferir jurisdicción por una coincidencia textual.
+### rows
 
-## Material, organizaciones y reglas heredadas
+Contar filas no exige sales_document. Contar documentos distintos excluye documentos nulos sin eliminar sus filas de otros análisis. No excluir registros por una regla de invalidación no documentada.
 
-`fabrica` de DIM_Material es la clasificación oficial de producción. `plant` es el centro de expedición;
-son conceptos separados. No igualarlos. La fábrica heredada difiere en 8.377 observaciones comparables
-según auditoría, no es corrección automática del mapping. `region_comercial_documentada` de DIM_OrgVnt
-prima para etiquetar organizaciones; no equiparar Norte Export/Norte, Sur Export/Madeira o Centro Export/Centro.
-`mercado_organizacion`, `formato_canal` y `gestion_entrega` conservan los mapas explícitos del JSON,
-con desconocido para código no contemplado; no equivalen al mercado geográfico ni al embalaje oficial.
+### joins
 
-Calidad y tipo se muestran como etiquetas exactas del mapping. No convertir no numérico/ausente en
-clinker, no clasificar cemento blanco o material desconocido como clinker. `kkc` es STRING:
-parseo explícito separado mediante Decimal, conservar literal N/A, nulo, inválido y número.
+Enriquecer sin multiplicar ni perder filas. Resolver una tupla única de atributos por clave; las coincidencias contradictorias quedan sin asignación. Conservar el orden durante el enriquecimiento; el resultado agregado puede ordenarse libremente.
 
-**Fábrica legacy opcional**, solo solicitud explícita y atributo `fabrica_legacy`, nunca default:
-requiere organización/canal/material/plant válidos. Orden: Canarias→Tenerife; COUR+E3→Oural;
-material auxiliar 000000000000200212→Oural; CSCB→Córdoba; CCAL/CCAC→Alconera;
-CSBB→Bobadilla; CSNB→Niebla; CSHU→Niebla-Madeira; CSMA/CSGR/CSPM/CMAL/CMGR/CMPM→Málaga;
-otro caso válido→Toral. E3=Granel y E4=Ensacado; otro canal impide fallback. Región legacy:
-EO11/EO21 Norte, EO55/EO53 Sur, EO56 Madeira, EO57/EO79 Canarias, EO65/EO66 Centro, EO54 Export.
-Esta regla conserva un concepto heredado separado; no la presentar como fábrica oficial de producción.
+### keys
 
-## Métricas comerciales
+Comparar IDs mediante claves auxiliares exactas y validadas sin alterar originales. Conservar ceros y alfanuméricos. No redondear, truncar ni completar nulos. Mantener joins textuales exactos; la búsqueda de etiquetas no sustituye la clave.
 
-- net_weight_1 es una medida numérica de peso. Puede agregarse mediante suma, media, mínimo, máximo, mediana y percentiles.
-- La unidad se obtiene de sales_unit. Cuando existan varias unidades, el agente debe separar el resultado por unidad o convertirlas solo si la equivalencia está definida en estos metadatos.
-- `net_price` es un precio unitario y no debe sumarse directamente. Puede calcularse su media simple o ponderada.
-- `net_value_of_the_order` es un importe monetario sumable por observación.
-- Los importes deben separarse por currency cuando haya más de una moneda.
-- `valor_neto_entrega` puede calcularse como `net_price * net_weight_1` cuando ambos valores sean válidos.
-- El precio ponderado puede calcularse como: `SUM(net_price * net_weight_1) / SUM(net_weight_1)`.
-- Los negativos se conservan.
-- Los nulos se excluyen de la operación matemática y se informa de su número.
-- Un conjunto sin filas produce “sin observaciones”, no un cero inventado.
+### coverage
 
-## Catálogo completo de columnas físicas
+Un conflicto de una dimensión solo afecta a resultados que la utilizan. Incluir categorías sin asignación y reconciliar desgloses. Distinguir falta de acceso, conjunto vacío y ausencia de valores válidos.
 
-| Nº | Columna | agent_usable | Tipo observado | Definición operativa |
+### currency
+
+Separar importes por moneda. Moneda vacía queda como no identificada, nunca como EUR supuesto. No sumar monedas distintas ni convertir sin tipo de cambio documentado.
+
+### weight
+
+Estadísticas del peso registrado disponibles. La unidad de sales_unit no se presume unidad del peso. Toneladas y conversiones solo con relación de unidades documentada para el alcance.
+
+### amount
+
+SUM(net_value_of_the_order) se etiqueta suma de valores registrados por moneda. No se declara ingreso o ventas certificadas mientras no se conozca si el importe se repite por documento.
+
+### price
+
+Precio: media simple y estadísticas, no suma como ingreso. Importe derivado y precio ponderado requieren precio y peso de bases compatibles. Numerador y denominador utilizan el mismo conjunto de pares válidos.
+
+### nulls
+
+COUNT de filas incluye nulos; COUNT de valores no. Estadísticas omiten valores ausentes y reportan cobertura. Todos nulos producen resultado no disponible. Denominador cero o nulo no produce ratio. Conservar negativos; no sustituirlos por valores absolutos.
+
+### dates
+
+Usar date_on_which_record para fechas comerciales. No asumir UTC ni desplazar horas hasta inspeccionar el tipo real. MTD/YTD y comparaciones declaran corte y períodos equivalentes. Ausencia de registros no acredita cobertura temporal completa.
+
+### kkc
+
+Convertir solo valores numéricos inequívocos para estadísticas descriptivas de KKC registrado. Separar N/A, nulos e inválidos. No sumar coeficientes como cantidades ni derivar emisiones o clinker equivalente sin unidad, escala y fórmula documentadas.
+
+### factory
+
+Fábrica de producción procede de la dimensión material. plant es expedición. Las clasificaciones heredadas no reemplazan la oficial y no se activan por defecto.
+
+### execution
+
+Toda cifra final requiere cálculo real sobre todas las filas del alcance. Una configuración no implementa un motor. Si falta ejecución o lectura, informar la limitación sin fabricar cifras.
+
+## Métricas propuestas
+
+| Métrica | Etiqueta | Operación | Condiciones |
+|---|---|---|---|
+| `conteo_observaciones` | Observaciones del alcance | `count_rows` | Valores válidos y alcance explícito. |
+| `documentos_distintos` | Códigos de documento distintos no nulos | `count_distinct` | Valores válidos y alcance explícito. |
+| `pagadores_distintos` | Códigos de pagador distintos no nulos | `count_distinct` | Valores válidos y alcance explícito. |
+| `obras_distintas` | Códigos de obra distintos no nulos | `count_distinct` | Valores válidos y alcance explícito. |
+| `peso_registrado` | Suma del peso registrado; unidad no confirmada | `sum` | No presentar como toneladas sin unidad documentada. |
+| `peso_toneladas` | Peso en toneladas cuando la unidad esté documentada | `sum` | Unidad y conversión verificables para el alcance. |
+| `suma_valor_registrado` | Suma de valores registrados por moneda | `sum` | No equivale automáticamente a ingresos o valor de entregas. |
+| `valor_neto_entrega` | Importe derivado de precio por peso compatible | `sum_product` | Unidad de peso y base de precio compatibles y documentadas.; Moneda identificada; pares válidos; grano de entrega conocido para usar esa etiqueta. |
+| `precio_medio` | Media simple del precio registrado por moneda y base compatible | `mean` | Valores válidos y alcance explícito. |
+| `precio_ponderado` | Precio ponderado por peso compatible | `sum_product_div_sum` | Mismo conjunto de pares válidos en numerador y denominador.; Denominador distinto de cero; base de precio/peso compatible. |
+| `distancia_registrada` | Estadísticas de distancia por unidad registrada | `descriptive` | Valores válidos y alcance explícito. |
+| `kkc_registrado` | Estadísticas de KKC registrado, no indicador de sostenibilidad | `descriptive_numeric_parse` | Conversión numérica inequívoca; no reemplazar N/A o nulos por cero. |
+
+## Dimensiones y enlaces
+
+| Dimensión | Archivo | Enlace | Atributos |
+|---|---|---|---|
+| material | `DIM_Material.parquet` | material_number → material_number | fabrica, embalaje, calidad, tipo_de_cemento, prod_kkc, kkc |
+| grupo_clientes | `DIM_GrupoClientes.parquet` | customers_account_n → customers_account_n | denomin_central |
+| distribuidores | `DIM_Distribuidores.parquet` | customers_account_n → customers_account_n | figura_en_mapping |
+| geografia | `DIM_Geografia.parquet` | region_description → region_description | ccaa, provincia_ajustada, mercado_oficemen, pain, zona_comercial, mercado |
+| organizacion | `DIM_OrgVnt.parquet` | sales_organization → sales_office | region_comercial_documentada |
+| territorio | `DIM_SalesDistrict.parquet` | postal_code → postal_code | sales_district |
+| cartera | `DIM_CarteraClientes.parquet` | sales_organization → orgvt, distribution_channel → cdis, sold_to_party → solic | gven, asignada, fuente, estado, nivel_consultado |
+
+La cartera consulta primero organización, canal y obra, comprobando pagador. Si no hay clave
+utilizable o coincidencia, consulta organización, canal y pagador. Una asignación contradictoria
+no se sustituye por otra vía. Los campos SAP de vendedor siguen siendo descriptivos independientes.
+Los atributos excluidos en mappings.json no se incorporan automáticamente a la proyección.
+La ausencia en la lista de distribuidores no demuestra que una entidad no sea distribuidora.
+Geografía del pagador y territorio de obra son ámbitos diferentes.
+
+## Información todavía no confirmada
+
+- Unidad efectiva del peso y relación con sales_unit.
+- Grano de cada observación y posible repetición del importe por documento.
+- Atributo UTC del timestamp: las fuentes recuperadas discrepan.
+- Unidad, escala y fórmula de KKC.
+
+Estas ausencias limitan etiquetas y fórmulas dependientes, no todo el análisis.
+No se rellenan con supuestos ni se convierten en certificados ficticios.
+Los mapas heredados y derivados no se reconstruyen desde instrucciones textuales de origen.
+No se habilitan clasificaciones inferidas. La fábrica oficial sigue disponible en DIM_Material.
+
+## Catálogo de columnas
+
+| Nº | Columna | agent_usable | Tipo de referencia | Definición |
 |---:|---|:---:|---|---|
-| 001 | `id` | false | INT64 | Identificador técnico de fila. |
-| 002 | `business_key` | false | STRING (BYTE_ARRAY, UTF8) | Hash técnico de la clave de negocio. |
-| 003 | `content_hash` | false | STRING (BYTE_ARRAY, UTF8) | Hash técnico del contenido. |
-| 004 | `record_status` | false | STRING (BYTE_ARRAY, UTF8) | Estado técnico del registro. |
-| 005 | `version_number` | false | INT64 | Versión técnica. |
-| 006 | `first_seen_run_id` | false | INT64 | Primera carga en que se observó. |
-| 007 | `last_seen_run_id` | false | INT64 | Última carga en que se observó. |
-| 008 | `valid_from_run_id` | false | INT64 | Carga inicial de vigencia. |
-| 009 | `valid_to_run_id` | false | INT64 | Carga final de vigencia. |
-| 010 | `first_seen_at` | false | STRING (BYTE_ARRAY, UTF8) | Fecha-hora técnica de primera observación. |
-| 011 | `last_seen_at` | false | STRING (BYTE_ARRAY, UTF8) | Fecha-hora técnica de última observación. |
-| 012 | `stale_at` | false | STRING (BYTE_ARRAY, UTF8) | Fecha-hora técnica de obsolescencia. |
-| 013 | `source_deleted_flag` | false | INT64 | Flag de borrado en origen. |
-| 014 | `sales_document` | true | STRING (BYTE_ARRAY, UTF8) | Identificador del documento de ventas, representado como texto canónico; conservar ceros iniciales. |
-| 015 | `sales_document_type` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 016 | `order_reason` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 017 | `sales_organization` | true | STRING (BYTE_ARRAY, UTF8) | Identifica la región comercial de la transacción mediante el mapa documentado. |
-| 018 | `distribution_channel` | true | STRING (BYTE_ARRAY, UTF8) | Identifica el formato del producto: E3=Granel; E4=Ensacado. |
-| 019 | `sales_group` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 020 | `sales_group_descript` | true | STRING (BYTE_ARRAY, UTF8) | Vendedor bajo el que está registrado el cliente en SAP. |
-| 021 | `sold_to_party` | true | STRING (BYTE_ARRAY, UTF8) | Número de obra/solicitante según la definición heredada; representado como texto canónico. No reinterpretar como cliente/pagador por su nombre inglés. |
-| 022 | `sold_to_party_descript` | true | STRING (BYTE_ARRAY, UTF8) | Nombre asociado a la obra/solicitante identificada por `sold_to_party`; no sustituye al nombre restringido del cliente/pagador. |
-| 023 | `postal_code` | true | STRING (BYTE_ARRAY, UTF8) | Código postal de la obra. |
-| 024 | `city` | true | STRING (BYTE_ARRAY, UTF8) | Población de la obra. |
-| 025 | `country_key` | true | STRING (BYTE_ARRAY, UTF8) | País de la obra. |
-| 026 | `customers_account_n` | true | STRING (BYTE_ARRAY, UTF8) | Número de cliente/pagador, identificador canónico textual; conservar ceros iniciales. |
-| 027 | `customer` | true | STRING (BYTE_ARRAY, UTF8) | Nombre de cliente asociado a `customers_account_n`. La definición existe, pero el flag no autoriza usar el nombre ni resolver identidades con él. |
-| 028 | `material_number` | true | STRING (BYTE_ARRAY, UTF8) | Código de material. Enlace auxiliar a DIM_Material.parquet sin alterar el original. |
-| 029 | `material_description` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 030 | `material_group` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 031 | `material_group_descript` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 032 | `sales_document_item_1` | true | STRING (BYTE_ARRAY, UTF8) | Correspondencia de datos con el antiguo campo de tipo de posición; no es una equivalencia con un número de posición. La definición funcional continúa pendiente y el campo no está autorizado. |
-| 033 | `reason_for_rejection` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 034 | `sales_unit` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 035 | `plant` | true | STRING (BYTE_ARRAY, UTF8) | Centro de expedición del cemento. |
-| 036 | `route` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 037 | `route_description` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 038 | `delivery_priority` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 039 | `net_price` | true | DOUBLE | Precio neto del albarán, por tonelada según el contrato funcional heredado; aplicar controles de unidad antes del valor de entrega derivado. |
-| 040 | `net_value_of_the_order` | true | DOUBLE | Valor neto registrado en la fuente; no confundir con `valor_neto_entrega` derivado. |
-| 041 | `tax_amount` | true | DOUBLE | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 042 | `currency` | true | STRING (BYTE_ARRAY, UTF8) | Moneda del documento; EUR en la instantánea revisada, sin garantía de moneda única en futuras cargas. |
-| 043 | `price_group` | true | STRING (BYTE_ARRAY, UTF8) | Identifica quién gestiona la entrega: CE=Votorantim; CP=cliente recoge o gestiona el pedido. |
-| 044 | `price_group_descript` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 045 | `customer_group` | true | STRING (BYTE_ARRAY, UTF8) | Definición funcional pendiente de confirmación con el propietario del dato. |
-| 046 | `customer_group_descript` | true | STRING (BYTE_ARRAY, UTF8) | Identifica el grupo al que pertenece el cliente. |
-| 047 | `terms_of_payment_key` | true | STRING (BYTE_ARRAY, UTF8) | Código relativo al tipo de pago. |
-| 048 | `terms_of_payment_descript` | true | STRING (BYTE_ARRAY, UTF8) | Descripción de las condiciones de pago. |
-| 049 | `region` | true | STRING (BYTE_ARRAY, UTF8) | Provincia del cliente/pagador según la codificación INE o numeración alfabética de provincias de España heredada; no es la región comercial derivada. |
-| 050 | `region_description` | true | STRING (BYTE_ARRAY, UTF8) | Nombre de la provincia asociado a `region`. |
-| 051 | `net_weight_1` | true | DOUBLE | Peso neto entregado al cliente, medida de volumen comercial según la regla heredada. El contrato lo expresa en toneladas, pero el esquema no declara unidad de peso; aplicar los controles de unidad antes de cálculos o etiquetas. |
-| 052 | `date_on_which_record` | true | TIMESTAMP[µs] sin zona horaria (INT64; isAdjustedToUTC=true) | Fecha de la operación comercial de la observación.
-operaciones: filtrar, agrupar, ordenar, mínimo, máximo, año, trimestre, mes,
-semana, día, MTD, YTD, comparación interanual y variación entre períodos. |
-| 053 | `distance` | true | DOUBLE | Distancia entre expedición y entrega, en kilómetros cuando `um_for_distance` declara KM; no interpretar unidad vacía y cero como un trayecto real nulo. |
-| 054 | `um_for_distance` | true | STRING (BYTE_ARRAY, UTF8) | Unidad declarada de distancia: KM o cadena vacía en la instantánea revisada; el vacío no acredita una unidad. |
-| 055 | `artifact_key` | false | STRING (BYTE_ARRAY, UTF8) | Campo técnico nuevo. Su semántica exacta, alcance y estabilidad están pendientes de confirmación; no se presume que reemplace un identificador antiguo. |
-| 056 | `source_file` | false | STRING (BYTE_ARRAY, UTF8) | Campo técnico nuevo de nombre indicativo de archivo fuente; su contrato no está confirmado y no equivale automáticamente a una hoja de origen. |
-| 057 | `dom_index` | false | INT64 | Campo técnico nuevo, entero; el nombre no permite confirmar su significado ni equipararlo a un número de fila previo. |
-| 058 | `_dg_equivalence_key` | false | STRING (BYTE_ARRAY, UTF8) | Campo técnico nuevo de equivalencia; construcción, unicidad y uso como clave no confirmados. |
-| 059 | `_dg_occurrence_count` | false | INT64 | Campo técnico nuevo de ocurrencias; no asumir que sea un factor de expansión, una cantidad comercial ni un multiplicador. |
-| 060 | `_dg_occurrence_index` | false | INT64 | Campo técnico nuevo de ocurrencias; orden y significado pendientes de confirmación. |
+| 001 | `id` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 002 | `business_key` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 003 | `content_hash` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 004 | `record_status` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 005 | `version_number` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 006 | `first_seen_run_id` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 007 | `last_seen_run_id` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 008 | `valid_from_run_id` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 009 | `valid_to_run_id` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 010 | `first_seen_at` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 011 | `last_seen_at` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 012 | `stale_at` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 013 | `source_deleted_flag` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 014 | `sales_document` | true | STRING | Código de documento registrado. Admite recuento distinto; no demuestra que cada fila sea una entrega o un pedido diferente. |
+| 015 | `sales_document_type` | true | STRING | Categoría registrada de sales_document_type. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 016 | `order_reason` | true | STRING | Categoría registrada de order_reason. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 017 | `sales_organization` | true | STRING | Código de organización de ventas; enlace a sales_office en la dimensión de organización. |
+| 018 | `distribution_channel` | true | STRING | Código del canal registrado. Su interpretación comercial debe corresponder a las etiquetas documentadas. |
+| 019 | `sales_group` | true | STRING | Código SAP registrado; disponible para descripción, no como sustituto de la asignación de cartera. |
+| 020 | `sales_group_descript` | true | STRING | Descripción SAP del vendedor asociado. Uso descriptivo o de asignación; no evaluación de personas. |
+| 021 | `sold_to_party` | true | STRING | Código de obra o solicitante; entidad distinta del pagador. |
+| 022 | `sold_to_party_descript` | true | STRING | Etiqueta de la obra o solicitante. No identifica por sí sola un pagador. |
+| 023 | `postal_code` | true | STRING | Código postal de la obra, almacenado como identificador textual. |
+| 024 | `city` | true | STRING | Población registrada de la obra. |
+| 025 | `country_key` | true | STRING | Código de país registrado de la obra. |
+| 026 | `customers_account_n` | true | STRING | Código de cliente o pagador; clave para agrupar y enlazar dimensiones. |
+| 027 | `customer` | true | STRING | Etiqueta registrada del pagador. La búsqueda por nombre devuelve códigos candidatos dentro del acceso autorizado; nombres repetidos no son claves únicas. |
+| 028 | `material_number` | true | STRING | Identificador de material para enlazar la dimensión material. |
+| 029 | `material_description` | true | STRING | Categoría registrada de material_description. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 030 | `material_group` | true | STRING | Categoría registrada de material_group. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 031 | `material_group_descript` | true | STRING | Categoría registrada de material_group_descript. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 032 | `sales_document_item_1` | true | STRING | Categoría registrada cuyo significado funcional no está confirmado. No usar como número de posición ni como clave de deduplicación. |
+| 033 | `reason_for_rejection` | true | STRING | Categoría registrada de reason_for_rejection. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 034 | `sales_unit` | true | STRING | Código de unidad comercial registrado. No se ha confirmado que determine la unidad de net_weight_1. |
+| 035 | `plant` | true | STRING | Centro de expedición registrado; no equivale a fábrica de producción. |
+| 036 | `route` | true | STRING | Categoría registrada de route. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 037 | `route_description` | true | STRING | Categoría registrada de route_description. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 038 | `delivery_priority` | true | STRING | Categoría registrada de delivery_priority. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 039 | `net_price` | true | DOUBLE | Precio neto registrado. La referencia recuperada menciona precio por tonelada, pero la compatibilidad con el peso debe comprobarse antes de calcular un importe derivado. |
+| 040 | `net_value_of_the_order` | true | DOUBLE | Importe registrado. Su suma por moneda es una suma de valores de filas; no acredita ingresos ni elimina posibles repeticiones de importe documental. |
+| 041 | `tax_amount` | true | DOUBLE | Valor numérico registrado con significado funcional pendiente. Estadísticas descriptivas disponibles; no presentar como impuesto liquidado. |
+| 042 | `currency` | true | STRING | Código de moneda del registro. Los cálculos monetarios se separan por moneda; moneda ausente se informa por separado. |
+| 043 | `price_group` | true | STRING | Código registrado relativo a la gestión de entrega. |
+| 044 | `price_group_descript` | true | STRING | Categoría registrada de price_group_descript. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados. |
+| 045 | `customer_group` | true | STRING | Código registrado del grupo del cliente. |
+| 046 | `customer_group_descript` | true | STRING | Descripción registrada del grupo del cliente. |
+| 047 | `terms_of_payment_key` | true | STRING | Código registrado de condiciones de pago. |
+| 048 | `terms_of_payment_descript` | true | STRING | Descripción registrada de condiciones de pago. |
+| 049 | `region` | true | STRING | Código de provincia del pagador; no región comercial ni provincia de la obra. |
+| 050 | `region_description` | true | STRING | Etiqueta de provincia del pagador, utilizada para el enlace geográfico. |
+| 051 | `net_weight_1` | true | DOUBLE | Peso neto registrado. La unidad física no queda acreditada por el tipo DOUBLE ni por sales_unit. Estadísticas en base registrada disponibles; toneladas requieren unidad documentada. |
+| 052 | `date_on_which_record` | true | TIMESTAMP_US | Fecha comercial de referencia para filtros y agrupaciones. El atributo UTC discrepa entre las fuentes recuperadas; inspeccionar el tipo real y no desplazar horas por suposición. |
+| 053 | `distance` | true | DOUBLE | Distancia registrada; etiquetar kilómetros únicamente cuando um_for_distance indique KM. |
+| 054 | `um_for_distance` | true | STRING | Unidad de distancia registrada; un valor vacío no define una unidad. |
+| 055 | `artifact_key` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 056 | `source_file` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 057 | `dom_index` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 058 | `_dg_equivalence_key` | false | STRING | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 059 | `_dg_occurrence_count` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
+| 060 | `_dg_occurrence_index` | false | INT64 | Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial. |
 
-**Total verificado:** 60 columnas; 42 true, 18 false. Ningún permiso heredado elevado.
+## Verificación antes de sustituir
+
+Comprobar lectura JSON, nombres de campos, correspondencia de versiones y proyección de 41/19.
+Probar en el consumidor existente: conteo de filas, suma registrada por moneda, filtro temporal,
+cruce sin expansión y precio ponderado con pares compatibles. Las nuevas propiedades no garantizan
+que el consumidor implemente las operaciones. No declarar probado lo que no se haya ejecutado.
+Los recuentos y hashes históricos del JSON no se usan como resultados de la carga actual.

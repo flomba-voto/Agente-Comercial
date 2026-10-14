@@ -1,8 +1,9 @@
 {
-  "version": "2.0",
-  "metadata_version": "5.0",
+  "version": "3.0",
+  "metadata_version": "6.0",
   "classification": "uso interno confidencial",
   "observed_at": "2026-10-14",
+  "configuration_status": "Edición propuesta con JSON válido y catálogo concordante; no certificada para sustitución directa sin prueba del consumidor.",
   "dataset": {
     "file": "current.parquet",
     "observed_snapshot": {
@@ -11,9 +12,10 @@
       "sha256": "6bb0a71e63315521d07b843e4ed3988e130a8537cd676d366103072fdb9d09a2",
       "remote_modified_at": "2026-10-09T16:48:40Z",
       "remote_version": 4,
-      "normalization_already_verified": false
+      "normalization_already_verified": false,
+      "scope": "Referencia histórica de la fuente recuperada; no representa una verificación de los bytes vigentes."
     },
-    "expected_normalization": "Inspeccionar esquema y valores de cada carga; aceptar IDs íntegros texto/entero/Decimal sin modificar originales. No existe un único dtype de pagador que coincida con todos los DIM. Ninguna huella futura predicha.",
+    "expected_normalization": "Comprobar esquema real en cada lectura. Crear claves auxiliares validadas solo en memoria; no cambiar valores de origen.",
     "observed_schema": {
       "id": "INT64",
       "business_key": "STRING",
@@ -66,7 +68,7 @@
       "region": "STRING",
       "region_description": "STRING",
       "net_weight_1": "DOUBLE",
-      "date_on_which_record": "TIMESTAMP_US_NO_TZ",
+      "date_on_which_record": "TIMESTAMP_US",
       "distance": "DOUBLE",
       "um_for_distance": "STRING",
       "artifact_key": "STRING",
@@ -76,365 +78,368 @@
       "_dg_occurrence_count": "INT64",
       "_dg_occurrence_index": "INT64"
     },
+    "schema_uncertainties": {
+      "date_on_which_record": "Discrepancia en isAdjustedToUTC entre fuentes. TIMESTAMP_US es familia descriptiva; confirmar atributo real antes de convertir zona."
+    },
     "fields": [
       {
         "name": "id",
         "agent_usable": false,
-        "definition": "Identificador técnico de fila.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "business_key",
         "agent_usable": false,
-        "definition": "Hash técnico de la clave de negocio.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "content_hash",
         "agent_usable": false,
-        "definition": "Hash técnico del contenido.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "record_status",
         "agent_usable": false,
-        "definition": "Estado técnico del registro.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "version_number",
         "agent_usable": false,
-        "definition": "Versión técnica.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "first_seen_run_id",
         "agent_usable": false,
-        "definition": "Primera carga en que se observó.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "last_seen_run_id",
         "agent_usable": false,
-        "definition": "Última carga en que se observó.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "valid_from_run_id",
         "agent_usable": false,
-        "definition": "Carga inicial de vigencia.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "valid_to_run_id",
         "agent_usable": false,
-        "definition": "Carga final de vigencia.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "first_seen_at",
         "agent_usable": false,
-        "definition": "Fecha-hora técnica de primera observación.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "last_seen_at",
         "agent_usable": false,
-        "definition": "Fecha-hora técnica de última observación.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "stale_at",
         "agent_usable": false,
-        "definition": "Fecha-hora técnica de obsolescencia.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "source_deleted_flag",
         "agent_usable": false,
-        "definition": "Flag de borrado en origen.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "sales_document",
         "agent_usable": true,
-        "definition": "Identificador del documento de ventas, representado como texto canónico; conservar ceros iniciales.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de documento registrado. Admite recuento distinto; no demuestra que cada fila sea una entrega o un pedido diferente.",
+        "observed_type": "STRING"
       },
       {
         "name": "sales_document_type",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de sales_document_type. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "order_reason",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de order_reason. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "sales_organization",
         "agent_usable": true,
-        "definition": "Identifica la región comercial de la transacción mediante el mapa documentado.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de organización de ventas; enlace a sales_office en la dimensión de organización.",
+        "observed_type": "STRING"
       },
       {
         "name": "distribution_channel",
         "agent_usable": true,
-        "definition": "Identifica el formato del producto: E3=Granel; E4=Ensacado.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código del canal registrado. Su interpretación comercial debe corresponder a las etiquetas documentadas.",
+        "observed_type": "STRING"
       },
       {
         "name": "sales_group",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código SAP registrado; disponible para descripción, no como sustituto de la asignación de cartera.",
+        "observed_type": "STRING"
       },
       {
         "name": "sales_group_descript",
         "agent_usable": true,
-        "definition": "Vendedor bajo el que está registrado el cliente en SAP.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Descripción SAP del vendedor asociado. Uso descriptivo o de asignación; no evaluación de personas.",
+        "observed_type": "STRING"
       },
       {
         "name": "sold_to_party",
         "agent_usable": true,
-        "definition": "Número de obra/solicitante según la definición heredada; representado como texto canónico. No reinterpretar como cliente/pagador por su nombre inglés.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de obra o solicitante; entidad distinta del pagador.",
+        "observed_type": "STRING"
       },
       {
         "name": "sold_to_party_descript",
         "agent_usable": true,
-        "definition": "Nombre asociado a la obra/solicitante identificada por `sold_to_party`; no sustituye al nombre restringido del cliente/pagador.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Etiqueta de la obra o solicitante. No identifica por sí sola un pagador.",
+        "observed_type": "STRING"
       },
       {
         "name": "postal_code",
         "agent_usable": true,
-        "definition": "Código postal de la obra.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código postal de la obra, almacenado como identificador textual.",
+        "observed_type": "STRING"
       },
       {
         "name": "city",
         "agent_usable": true,
-        "definition": "Población de la obra.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Población registrada de la obra.",
+        "observed_type": "STRING"
       },
       {
         "name": "country_key",
         "agent_usable": true,
-        "definition": "País de la obra.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de país registrado de la obra.",
+        "observed_type": "STRING"
       },
       {
         "name": "customers_account_n",
         "agent_usable": true,
-        "definition": "Número de cliente/pagador, identificador canónico textual; conservar ceros iniciales.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de cliente o pagador; clave para agrupar y enlazar dimensiones.",
+        "observed_type": "STRING"
       },
       {
         "name": "customer",
         "agent_usable": true,
-        "definition": "Nombre de cliente asociado a `customers_account_n`. La definición existe, pero el flag no autoriza usar el nombre ni resolver identidades con él.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Etiqueta registrada del pagador. La búsqueda por nombre devuelve códigos candidatos dentro del acceso autorizado; nombres repetidos no son claves únicas.",
+        "observed_type": "STRING"
       },
       {
         "name": "material_number",
         "agent_usable": true,
-        "definition": "Código de material. Enlace auxiliar a DIM_Material.parquet sin alterar el original.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Identificador de material para enlazar la dimensión material.",
+        "observed_type": "STRING"
       },
       {
         "name": "material_description",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de material_description. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "material_group",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de material_group. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "material_group_descript",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de material_group_descript. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "sales_document_item_1",
         "agent_usable": true,
-        "definition": "Correspondencia de datos con el antiguo campo de tipo de posición; no es una equivalencia con un número de posición. La definición funcional continúa pendiente y el campo no está autorizado.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada cuyo significado funcional no está confirmado. No usar como número de posición ni como clave de deduplicación.",
+        "observed_type": "STRING"
       },
       {
         "name": "reason_for_rejection",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de reason_for_rejection. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "sales_unit",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de unidad comercial registrado. No se ha confirmado que determine la unidad de net_weight_1.",
+        "observed_type": "STRING"
       },
       {
         "name": "plant",
         "agent_usable": true,
-        "definition": "Centro de expedición del cemento.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Centro de expedición registrado; no equivale a fábrica de producción.",
+        "observed_type": "STRING"
       },
       {
         "name": "route",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de route. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "route_description",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de route_description. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "delivery_priority",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de delivery_priority. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "net_price",
         "agent_usable": true,
-        "definition": "Precio neto del albarán, por tonelada según el contrato funcional heredado; aplicar controles de unidad antes del valor de entrega derivado.",
+        "definition": "Precio neto registrado. La referencia recuperada menciona precio por tonelada, pero la compatibilidad con el peso debe comprobarse antes de calcular un importe derivado.",
         "observed_type": "DOUBLE"
       },
       {
         "name": "net_value_of_the_order",
         "agent_usable": true,
-        "definition": "Valor neto registrado en la fuente; no confundir con `valor_neto_entrega` derivado.",
+        "definition": "Importe registrado. Su suma por moneda es una suma de valores de filas; no acredita ingresos ni elimina posibles repeticiones de importe documental.",
         "observed_type": "DOUBLE"
       },
       {
         "name": "tax_amount",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
+        "definition": "Valor numérico registrado con significado funcional pendiente. Estadísticas descriptivas disponibles; no presentar como impuesto liquidado.",
         "observed_type": "DOUBLE"
       },
       {
         "name": "currency",
         "agent_usable": true,
-        "definition": "Moneda del documento; EUR en la instantánea revisada, sin garantía de moneda única en futuras cargas.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de moneda del registro. Los cálculos monetarios se separan por moneda; moneda ausente se informa por separado.",
+        "observed_type": "STRING"
       },
       {
         "name": "price_group",
         "agent_usable": true,
-        "definition": "Identifica quién gestiona la entrega: CE=Votorantim; CP=cliente recoge o gestiona el pedido.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código registrado relativo a la gestión de entrega.",
+        "observed_type": "STRING"
       },
       {
         "name": "price_group_descript",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Categoría registrada de price_group_descript. Se permite análisis por valor literal sin atribuir significados funcionales no confirmados.",
+        "observed_type": "STRING"
       },
       {
         "name": "customer_group",
         "agent_usable": true,
-        "definition": "Definición funcional pendiente de confirmación con el propietario del dato.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código registrado del grupo del cliente.",
+        "observed_type": "STRING"
       },
       {
         "name": "customer_group_descript",
         "agent_usable": true,
-        "definition": "Identifica el grupo al que pertenece el cliente.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Descripción registrada del grupo del cliente.",
+        "observed_type": "STRING"
       },
       {
         "name": "terms_of_payment_key",
         "agent_usable": true,
-        "definition": "Código relativo al tipo de pago.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código registrado de condiciones de pago.",
+        "observed_type": "STRING"
       },
       {
         "name": "terms_of_payment_descript",
         "agent_usable": true,
-        "definition": "Descripción de las condiciones de pago.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Descripción registrada de condiciones de pago.",
+        "observed_type": "STRING"
       },
       {
         "name": "region",
         "agent_usable": true,
-        "definition": "Provincia del cliente/pagador según la codificación INE o numeración alfabética de provincias de España heredada; no es la región comercial derivada.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Código de provincia del pagador; no región comercial ni provincia de la obra.",
+        "observed_type": "STRING"
       },
       {
         "name": "region_description",
         "agent_usable": true,
-        "definition": "Nombre de la provincia asociado a `region`.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Etiqueta de provincia del pagador, utilizada para el enlace geográfico.",
+        "observed_type": "STRING"
       },
       {
         "name": "net_weight_1",
         "agent_usable": true,
-        "definition": "Peso neto entregado al cliente, medida de volumen comercial según la regla heredada. El contrato lo expresa en toneladas, pero el esquema no declara unidad de peso; aplicar los controles de unidad antes de cálculos o etiquetas.",
+        "definition": "Peso neto registrado. La unidad física no queda acreditada por el tipo DOUBLE ni por sales_unit. Estadísticas en base registrada disponibles; toneladas requieren unidad documentada.",
         "observed_type": "DOUBLE"
       },
       {
         "name": "date_on_which_record",
         "agent_usable": true,
-        "definition": "Fecha de la operación comercial de la observación. Operaciones: filtrar, agrupar, ordenar, mínimo, máximo, año, trimestre, mes, semana, día, MTD, YTD, comparación interanual y variación entre períodos.",
-        "observed_type": "TIMESTAMP[µs] sin zona horaria (INT64; isAdjustedToUTC=false)"
+        "definition": "Fecha comercial de referencia para filtros y agrupaciones. El atributo UTC discrepa entre las fuentes recuperadas; inspeccionar el tipo real y no desplazar horas por suposición.",
+        "observed_type": "TIMESTAMP_US"
       },
       {
         "name": "distance",
         "agent_usable": true,
-        "definition": "Distancia entre expedición y entrega, en kilómetros cuando `um_for_distance` declara KM; no interpretar unidad vacía y cero como un trayecto real nulo.",
+        "definition": "Distancia registrada; etiquetar kilómetros únicamente cuando um_for_distance indique KM.",
         "observed_type": "DOUBLE"
       },
       {
         "name": "um_for_distance",
         "agent_usable": true,
-        "definition": "Unidad declarada de distancia: KM o cadena vacía en la instantánea revisada; el vacío no acredita una unidad.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Unidad de distancia registrada; un valor vacío no define una unidad.",
+        "observed_type": "STRING"
       },
       {
         "name": "artifact_key",
         "agent_usable": false,
-        "definition": "Campo técnico nuevo. Su semántica exacta, alcance y estabilidad están pendientes de confirmación; no se presume que reemplace un identificador antiguo.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "source_file",
         "agent_usable": false,
-        "definition": "Campo técnico nuevo de nombre indicativo de archivo fuente; su contrato no está confirmado y no equivale automáticamente a una hoja de origen.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "dom_index",
         "agent_usable": false,
-        "definition": "Campo técnico nuevo, entero; el nombre no permite confirmar su significado ni equipararlo a un número de fila previo.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "_dg_equivalence_key",
         "agent_usable": false,
-        "definition": "Campo técnico nuevo de equivalencia; construcción, unicidad y uso como clave no confirmados.",
-        "observed_type": "STRING (BYTE_ARRAY, UTF8)"
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
+        "observed_type": "STRING"
       },
       {
         "name": "_dg_occurrence_count",
         "agent_usable": false,
-        "definition": "Campo técnico nuevo de ocurrencias; no asumir que sea un factor de expansión, una cantidad comercial ni un multiplicador.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       },
       {
         "name": "_dg_occurrence_index",
         "agent_usable": false,
-        "definition": "Campo técnico nuevo de ocurrencias; orden y significado pendientes de confirmación.",
+        "definition": "Campo técnico excluido de la proyección comercial; no utilizar como cantidad, ponderador o clave de deduplicación comercial.",
         "observed_type": "INT64"
       }
     ],
@@ -443,13 +448,13 @@
       "sold_to_party": 10,
       "customers_account_n": 10,
       "material_number": 18
-    }
+    },
+    "agent_usable_true": 41,
+    "agent_usable_false": 19,
+    "count_note": "Recuento calculado sobre las 60 entradas: 41 habilitadas y 19 técnicas. El encabezado original declaraba 42/18, pero sus flags no coincidían."
   },
   "runtime_privacy_blocked_fields": [],
-  "field_certifications": {
-    "net_weight_1": ["peso_toneladas"],
-    "net_price": ["precio_por_tonelada"]
-  },
+  "field_certifications": {},
   "data_labels_are_instructions": false,
   "mappings": {
     "material": {
@@ -521,7 +526,8 @@
       "internal_attributes": [],
       "observed_snapshot": {
         "rows": 104,
-        "sha256": "11da562a71a0b47b3e2dc15d9393daa5efa308338a285c30b6848f09721ef8c2"
+        "sha256": "11da562a71a0b47b3e2dc15d9393daa5efa308338a285c30b6848f09721ef8c2",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
       },
       "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
       "physical_edits_allowed": false
@@ -582,7 +588,8 @@
       "internal_attributes": [],
       "observed_snapshot": {
         "rows": 222,
-        "sha256": "80cdc1be04029c5b87d1a2aa3547e6daf260f3a0792aac0023817aa89d6e0a64"
+        "sha256": "80cdc1be04029c5b87d1a2aa3547e6daf260f3a0792aac0023817aa89d6e0a64",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
       },
       "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
       "physical_edits_allowed": false
@@ -639,13 +646,15 @@
       "internal_attributes": [],
       "observed_snapshot": {
         "rows": 6,
-        "sha256": "3c130d3a19551933a59617bec5765cb122875fa6b3ef70cb1808c4ea6344a74b"
+        "sha256": "3c130d3a19551933a59617bec5765cb122875fa6b3ef70cb1808c4ea6344a74b",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
       },
       "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
       "physical_edits_allowed": false,
       "computed_attributes": [
         "figura_en_mapping"
-      ]
+      ],
+      "entity_scope": "Pertenencia a la lista documentada. Ausencia significa no figura, no una clasificación negativa de negocio."
     },
     "geografia": {
       "file": "DIM_Geografia.parquet",
@@ -713,11 +722,12 @@
       "internal_attributes": [],
       "observed_snapshot": {
         "rows": 108,
-        "sha256": "6ac414f4b6a453a04be04d5b10e707c8aba20ad00452f151276123cd2dd09128"
+        "sha256": "6ac414f4b6a453a04be04d5b10e707c8aba20ad00452f151276123cd2dd09128",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
       },
       "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
       "physical_edits_allowed": false,
-      "entity_scope": "Clasificación de provincia del pagador, no provincia de obra; pain es atributo del mapping y no country_key."
+      "entity_scope": "Geografía del pagador; distinta de los campos de obra. pain es etiqueta del mapping."
     },
     "organizacion": {
       "file": "DIM_OrgVnt.parquet",
@@ -770,11 +780,12 @@
       "internal_attributes": [],
       "observed_snapshot": {
         "rows": 10,
-        "sha256": "925b40d733be170eddd87db25fd1e490794a6ca70bd341b23cdc799e2ffada34"
+        "sha256": "925b40d733be170eddd87db25fd1e490794a6ca70bd341b23cdc799e2ffada34",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
       },
       "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
       "physical_edits_allowed": false,
-      "entity_scope": "sales_office es nombre físico de la clave DIM explícitamente vinculado a sales_organization; no existe sales_office en current."
+      "entity_scope": "Enlace documentado entre sales_organization de hechos y sales_office de la dimensión."
     },
     "territorio": {
       "file": "DIM_SalesDistrict.parquet",
@@ -827,11 +838,12 @@
       "internal_attributes": [],
       "observed_snapshot": {
         "rows": 2451,
-        "sha256": "909273de60b1eccdc8a979df956fde8210cbc291b261aa2d5804b7bf5e403111"
+        "sha256": "909273de60b1eccdc8a979df956fde8210cbc291b261aa2d5804b7bf5e403111",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
       },
       "cardinality_policy": "unique_requested_value_tuple_per_exact_auxiliary_key",
       "physical_edits_allowed": false,
-      "entity_scope": "Territorio comercial por CP de obra; sin país en la dimensión. No inferir jerarquía con provincia de pagador."
+      "entity_scope": "Distrito comercial por CP de obra; dimensión sin país. No inferir provincia del pagador."
     },
     "cartera": {
       "file": "DIM_CarteraClientes.parquet",
@@ -892,10 +904,6 @@
         "gclt2": "STRING",
         "nif": "STRING"
       },
-      "observed_snapshot": {
-        "rows": 3408,
-        "sha256": "dfb0d0c05282ff922dba3462ef765b0c20ef57b81a2f499058ce0bc786f583f8"
-      },
       "keys": [
         {
           "raw": "sales_organization",
@@ -914,6 +922,27 @@
           "width": 10
         }
       ],
+      "attributes": [
+        "gven"
+      ],
+      "forbidden_attributes": [
+        "nombre_del_cliente",
+        "nombre_de_la_obra",
+        "nif",
+        "provincia",
+        "gclt",
+        "gclt2",
+        "busqueda_obra",
+        "busqueda_pagador"
+      ],
+      "internal_attributes": [],
+      "observed_snapshot": {
+        "rows": 3408,
+        "sha256": "dfb0d0c05282ff922dba3462ef765b0c20ef57b81a2f499058ce0bc786f583f8",
+        "scope": "Referencia histórica recuperada; no certifica la carga actual."
+      },
+      "cardinality_policy": "unique_exact_gven_and_payer_tuple_for_obra_unique_exact_gven_for_pagador",
+      "physical_edits_allowed": false,
       "levels": [
         {
           "name": "obra",
@@ -964,36 +993,20 @@
         "width": 10
       },
       "assignment_column": "gven",
-      "attributes": [
-        "gven"
-      ],
-      "internal_attributes": [],
       "computed_attributes": [
         "asignada",
         "fuente",
         "estado",
         "nivel_consultado"
       ],
-      "forbidden_attributes": [
-        "nombre_del_cliente",
-        "nombre_de_la_obra",
-        "nif",
-        "provincia",
-        "gclt",
-        "gclt2",
-        "busqueda_obra",
-        "busqueda_pagador"
-      ],
       "fallback_from_statuses": [
         "sin_coincidencia",
         "clave_ausente"
       ],
-      "fallback_sales_group": true,
-      "fallback_sales_group_descript": true,
-      "physical_edits_allowed": false,
-      "cardinality_policy": "unique_exact_gven_and_payer_tuple_for_obra_unique_exact_gven_for_pagador",
-      "public_projection": "gven autorizado exclusivamente para identificar responsable/asignación, con estado/fuente/asignada/nivel_consultado. No evaluar desempeño, competencia ni rankings de empleados; no inferir crosswalk laboral con descriptivos raw.",
-      "evidence_note": "Nuevo Parquet de 26 columnas inspeccionado: 3408 filas; igual a Excel en 13 campos. 46 claves de pagador con varios gven; tipos no resuelven conflictos."
+      "fallback_sales_group": false,
+      "fallback_sales_group_descript": false,
+      "public_projection": "Identificación de asignación documentada con trazabilidad. No evaluar ni clasificar desempeño de empleados.",
+      "evidence_note": "La unicidad de asignación se comprueba en las claves consultadas; el cambio de tipo no resuelve asignaciones contradictorias."
     }
   },
   "statuses": [
@@ -1008,142 +1021,188 @@
   "join_policy": {
     "preserve_rows": true,
     "preserve_order_and_duplicate_index": true,
-    "geo_and_postal": "exact_text_only_no_trim_case_accent_padding_alias",
-    "identifier": "ASCII dígitos o decimal textual con fracción exclusivamente cero; entero/Decimal íntegro no negativo; límite ancho. Floats y bool rechazados. Alfanumérico se conserva exacto sin transformar.",
-    "collision_check": "Contar representaciones distintas por clave auxiliar y comprobar conjunto de tuplas de atributos requeridos; compatibles idénticas no expanden; conflictos no se asignan.",
+    "geo_and_postal": "exact_text",
+    "identifier": "Auxiliar exacto, sin pérdida de precisión; límites de ancho y colisiones comprobados.",
+    "collision_check": "Tupla única de atributos requeridos; discrepancias no se resuelven por primera fila.",
     "deduplicate_raw": false,
     "first_row_wins": false,
-    "aliases_allowed": true
+    "aliases_allowed": false,
+    "scope": "Conservación de filas y orden en enriquecimiento, no en presentación agregada."
   },
   "metrics": {
     "conteo_observaciones": {
+      "raw_columns": [],
+      "certifications": [],
+      "label": "Observaciones del alcance",
+      "operation": "count_rows",
+      "conditions": []
+    },
+    "documentos_distintos": {
       "raw_columns": [
         "sales_document"
       ],
       "certifications": [],
-      "label": "Observaciones (no ventas, pedidos ni entregas únicas)"
+      "label": "Códigos de documento distintos no nulos",
+      "operation": "count_distinct",
+      "conditions": []
+    },
+    "pagadores_distintos": {
+      "raw_columns": [
+        "customers_account_n"
+      ],
+      "certifications": [],
+      "label": "Códigos de pagador distintos no nulos",
+      "operation": "count_distinct",
+      "conditions": []
+    },
+    "obras_distintas": {
+      "raw_columns": [
+        "sold_to_party"
+      ],
+      "certifications": [],
+      "label": "Códigos de obra distintos no nulos",
+      "operation": "count_distinct",
+      "conditions": []
+    },
+    "peso_registrado": {
+      "raw_columns": [
+        "net_weight_1"
+      ],
+      "certifications": [],
+      "label": "Suma del peso registrado; unidad no confirmada",
+      "operation": "sum",
+      "conditions": [
+        "No presentar como toneladas sin unidad documentada."
+      ]
     },
     "peso_toneladas": {
       "raw_columns": [
-        "sales_document",
         "net_weight_1"
       ],
-      "certifications": [
-        "grano_sumable",
-        "peso_toneladas"
-      ],
-      "label": "Peso en toneladas, solo certificado"
+      "certifications": [],
+      "label": "Peso en toneladas cuando la unidad esté documentada",
+      "operation": "sum",
+      "conditions": [
+        "Unidad y conversión verificables para el alcance."
+      ]
     },
     "suma_valor_registrado": {
       "raw_columns": [
-        "sales_document",
         "net_value_of_the_order",
         "currency"
       ],
-      "certifications": [
-        "grano_sumable",
-        "valor_registrado_sumable"
-      ],
-      "label": "Suma de valor neto registrado, no sustituye valor de entrega"
+      "certifications": [],
+      "label": "Suma de valores registrados por moneda",
+      "operation": "sum",
+      "conditions": [
+        "No equivale automáticamente a ingresos o valor de entregas."
+      ]
     },
     "valor_neto_entrega": {
       "raw_columns": [
-        "sales_document",
         "net_price",
         "net_weight_1",
         "currency"
       ],
-      "certifications": [
-        "grano_sumable",
-        "peso_toneladas",
-        "precio_por_tonelada"
+      "certifications": [],
+      "label": "Importe derivado de precio por peso compatible",
+      "operation": "sum_product",
+      "conditions": [
+        "Unidad de peso y base de precio compatibles y documentadas.",
+        "Moneda identificada; pares válidos; grano de entrega conocido para usar esa etiqueta."
+      ]
+    },
+    "precio_medio": {
+      "raw_columns": [
+        "net_price",
+        "currency"
       ],
-      "label": "Precio por peso certificado, no valor neto registrado"
+      "certifications": [],
+      "label": "Media simple del precio registrado por moneda y base compatible",
+      "operation": "mean",
+      "conditions": []
+    },
+    "precio_ponderado": {
+      "raw_columns": [
+        "net_price",
+        "net_weight_1",
+        "currency"
+      ],
+      "certifications": [],
+      "label": "Precio ponderado por peso compatible",
+      "operation": "sum_product_div_sum",
+      "conditions": [
+        "Mismo conjunto de pares válidos en numerador y denominador.",
+        "Denominador distinto de cero; base de precio/peso compatible."
+      ]
+    },
+    "distancia_registrada": {
+      "raw_columns": [
+        "distance",
+        "um_for_distance"
+      ],
+      "certifications": [],
+      "label": "Estadísticas de distancia por unidad registrada",
+      "operation": "descriptive",
+      "conditions": []
+    },
+    "kkc_registrado": {
+      "raw_columns": [
+        "material_number"
+      ],
+      "mapping": "material",
+      "attribute": "kkc",
+      "certifications": [],
+      "label": "Estadísticas de KKC registrado, no indicador de sostenibilidad",
+      "operation": "descriptive_numeric_parse",
+      "conditions": [
+        "Conversión numérica inequívoca; no reemplazar N/A o nulos por cero."
+      ]
     }
   },
-  "semantic_certifications": {
-    "grano_sumable": null,
-    "peso_toneladas": null,
-    "precio_por_tonelada": null,
-    "valor_registrado_sumable": null,
-    "evento_fecha_y_autorizacion": null,
-    "unidad_formula_kkc": null
-  },
+  "semantic_certifications": {},
   "temporal_queries_enabled": true,
   "comparisons_enabled": true,
-  "legacy_factory_enabled_by_default": true,
-  "legacy_rules": {
-    "region": {
-      "EO11": "Norte",
-      "EO21": "Norte",
-      "EO55": "Sur",
-      "EO56": "Madeira",
-      "EO57": "Canarias",
-      "EO79": "Canarias",
-      "EO65": "Centro",
-      "EO66": "Centro",
-      "EO53": "Sur",
-      "EO54": "Export"
-    },
-    "special_material": "000000000000200212",
-    "plants": {
-      "CSCB": "Córdoba",
-      "CCAL": "Alconera",
-      "CCAC": "Alconera",
-      "CSBB": "Bobadilla",
-      "CSNB": "Niebla",
-      "CSHU": "Niebla-Madeira",
-      "CSMA": "Málaga",
-      "CSGR": "Málaga",
-      "CSPM": "Málaga",
-      "CMAL": "Málaga",
-      "CMGR": "Málaga",
-      "CMPM": "Málaga"
-    }
-  },
-  "derived_dimensions": {
-    "mercado_organizacion": {
-      "source": "sales_organization",
-      "values": {
-        "EO11": "Doméstico",
-        "EO21": "Export",
-        "EO55": "Doméstico",
-        "EO56": "Export",
-        "EO57": "Doméstico",
-        "EO79": "Doméstico",
-        "EO65": "Doméstico",
-        "EO66": "Export",
-        "EO53": "Doméstico",
-        "EO54": "Export"
-      }
-    },
-    "formato_canal": {
-      "source": "distribution_channel",
-      "values": {
-        "E3": "Granel",
-        "E4": "Ensacado"
-      }
-    },
-    "gestion_entrega": {
-      "source": "price_group",
-      "values": {
-        "CE": "Entrega gestionada por Votorantim",
-        "CP": "Cliente recoge o gestiona"
-      }
-    }
-  },
+  "legacy_factory_enabled_by_default": false,
+  "legacy_rules": {},
+  "derived_dimensions": {},
   "not_implemented": [
-    "Motor universal de lenguaje natural",
-    "Consultas temporales/comparaciones comerciales",
-    "Rankings de empleados o evaluación de competencia",
-    "Resolución por nombre/alias/fuzzy",
-    "Cálculos KKC/sostenibilidad",
-    "Despliegue o autenticación M365",
-    "Caché persistente"
+    "No se acredita implementación del motor ni compatibilidad del consumidor JSON mediante esta edición.",
+    "Evaluación o clasificación del desempeño de empleados no permitida.",
+    "Conversión de unidades, divisas o indicadores ambientales sin definición documentada no habilitada."
   ],
   "expected_identifier_families": [
     "STRING",
     "INT64",
     "DECIMAL_INTEGRAL_VALUE_VALIDATED"
-  ]
+  ],
+  "calculation_policy": {
+    "calculation": "Se proponen filtros combinados, agrupaciones, ordenación, pivotes, estadísticas, diferencias, ratios y columnas temporales sobre campos habilitados. No se exige una certificación externa para describir valores registrados. Las etiquetas de negocio y conversiones requieren definición conocida.",
+    "access": "agent_usable describe uso analítico, no concede permisos. Aplicar acceso efectivo del usuario. No exponer secretos ni evaluar rendimiento de personas.",
+    "categorical": "Campos categóricos con definición pendiente admiten análisis literal. Identificadores no se suman ni promedian.",
+    "rows": "Contar filas no exige sales_document. Contar documentos distintos excluye documentos nulos sin eliminar sus filas de otros análisis. No excluir registros por una regla de invalidación no documentada.",
+    "joins": "Enriquecer sin multiplicar ni perder filas. Resolver una tupla única de atributos por clave; las coincidencias contradictorias quedan sin asignación. Conservar el orden durante el enriquecimiento; el resultado agregado puede ordenarse libremente.",
+    "keys": "Comparar IDs mediante claves auxiliares exactas y validadas sin alterar originales. Conservar ceros y alfanuméricos. No redondear, truncar ni completar nulos. Mantener joins textuales exactos; la búsqueda de etiquetas no sustituye la clave.",
+    "coverage": "Un conflicto de una dimensión solo afecta a resultados que la utilizan. Incluir categorías sin asignación y reconciliar desgloses. Distinguir falta de acceso, conjunto vacío y ausencia de valores válidos.",
+    "currency": "Separar importes por moneda. Moneda vacía queda como no identificada, nunca como EUR supuesto. No sumar monedas distintas ni convertir sin tipo de cambio documentado.",
+    "weight": "Estadísticas del peso registrado disponibles. La unidad de sales_unit no se presume unidad del peso. Toneladas y conversiones solo con relación de unidades documentada para el alcance.",
+    "amount": "SUM(net_value_of_the_order) se etiqueta suma de valores registrados por moneda. No se declara ingreso o ventas certificadas mientras no se conozca si el importe se repite por documento.",
+    "price": "Precio: media simple y estadísticas, no suma como ingreso. Importe derivado y precio ponderado requieren precio y peso de bases compatibles. Numerador y denominador utilizan el mismo conjunto de pares válidos.",
+    "nulls": "COUNT de filas incluye nulos; COUNT de valores no. Estadísticas omiten valores ausentes y reportan cobertura. Todos nulos producen resultado no disponible. Denominador cero o nulo no produce ratio. Conservar negativos; no sustituirlos por valores absolutos.",
+    "dates": "Usar date_on_which_record para fechas comerciales. No asumir UTC ni desplazar horas hasta inspeccionar el tipo real. MTD/YTD y comparaciones declaran corte y períodos equivalentes. Ausencia de registros no acredita cobertura temporal completa.",
+    "kkc": "Convertir solo valores numéricos inequívocos para estadísticas descriptivas de KKC registrado. Separar N/A, nulos e inválidos. No sumar coeficientes como cantidades ni derivar emisiones o clinker equivalente sin unidad, escala y fórmula documentadas.",
+    "factory": "Fábrica de producción procede de la dimensión material. plant es expedición. Las clasificaciones heredadas no reemplazan la oficial y no se activan por defecto.",
+    "execution": "Toda cifra final requiere cálculo real sobre todas las filas del alcance. Una configuración no implementa un motor. Si falta ejecución o lectura, informar la limitación sin fabricar cifras."
+  },
+  "semantic_definitions": {
+    "weight_unit": null,
+    "price_basis": "Referencia recuperada: por tonelada; compatibilidad con peso no verificada.",
+    "sales_unit_is_weight_unit": null,
+    "row_grain": null,
+    "registered_amount_repetition": null,
+    "kkc_unit": null,
+    "kkc_scale": null,
+    "kkc_formula": null
+  },
+  "compatibility_note": "Se conservan las secciones principales. Nuevas métricas y propiedades son especificación propuesta: requieren que el consumidor las soporte. Los mapas heredados y derivados no se reconstruyen desde reglas textuales; no se habilitan clasificaciones inferidas."
 }
